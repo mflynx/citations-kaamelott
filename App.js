@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 
-const backgroundImage = require("./assets/wallpaper-people.jpg");
+const backgroundImage = require("./assets/images/wallpaper-people.jpg");
 
 export default function App() {
   const [quoteInfo, setQuoteInfo] = useState(null);
