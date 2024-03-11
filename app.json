@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "citations-kaamelott",
+    "name": "kikaaditt",
     "slug": "citations-kaamelott",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,15 +11,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.mflynx.citationskaamelott"
@@ -31,6 +29,14 @@
       "eas": {
         "projectId": "4fb3b24c-1669-476e-801e-3f4ebcb323b8"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/folkard.ttf"]
+        }
+      ]
+    ]
   }
 }

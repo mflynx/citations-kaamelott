@@ -1,78 +1,25 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
-import {
-  Button,
-  ImageBackground,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const backgroundImage = require("./assets/images/wallpaper-people.jpg");
+import Home from "./screens/Home";
+import Game from "./screens/Game";
+import GameEnd from "./screens/GameEnd";
+import QuoteGenerator from "./screens/QuoteGenerator";
+import { View } from "react-native";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [quoteInfo, setQuoteInfo] = useState(null);
-
-  async function getRandomQuote() {
-    const res = await fetch("https://kaamelott.chaudie.re/api/random");
-    const response = await res.json();
-    setQuoteInfo(response);
-  }
-
-  useEffect(() => {
-    getRandomQuote();
-  }, []);
-
-  if (!quoteInfo || quoteInfo.status !== 1) return;
   return (
-    <View style={styles.container}>
-      <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
-
-        <View style={styles.quoteContainer}>
-          <ScrollView>
-            <Text style={styles.quoteText}>{quoteInfo.citation.citation}</Text>
-          </ScrollView>
-          <Text style={[styles.quoteText, {paddingTop: 12}]}>{quoteInfo.citation.infos.personnage}</Text>
-        </View>
-
-        <View style={styles.button}>
-          <Button title="Une autre !" onPress={getRandomQuote} color={"#9c4312"}/>
-        </View>
-      </ImageBackground>
-
+    <NavigationContainer>
+        <Stack.Navigator initialRouteName="Kaamelott Kikaaditt">
+          <Stack.Screen name="Kaamelott Kikaaditt" component={Home}></Stack.Screen>
+          <Stack.Screen name="Game" component={Game}></Stack.Screen>
+          <Stack.Screen name="GameEnd" component={GameEnd}></Stack.Screen>
+          <Stack.Screen name="Répliques au hasard" component={QuoteGenerator} ></Stack.Screen>
+        </Stack.Navigator>
       <StatusBar style="auto" />
-    </View>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 0,
-    width: "100%",
-    height: "100%",
-  },
-  image: {
-    flex: 0,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-  quoteContainer: {
-    maxHeight: "40%",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 16,
-    backgroundColor: "#000000c0",
-  },
-  quoteText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "justify",
-  },
-  button: {
-    alignSelf: "center",
-    position: "absolute",
-    bottom: 0,
-  },
-});
