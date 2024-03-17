@@ -34,7 +34,7 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/folkard.ttf"]
+          "fonts": ["./assets/fonts/Folkard.ttf"]
         }
       ]
     ]

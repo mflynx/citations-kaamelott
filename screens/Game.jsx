@@ -7,11 +7,12 @@ import AnswerModal from "../components/AnswerModal";
 
 
 const allCharactersName = allCharacters.map(e => e.name);
-const totalQuotes = 10;
 
-const Game = ({navigation}) => {
+const Game = ({route, navigation}) => {
+    const {gameTotalQuotes} = route.params.gameConfig;
+
     const [selectedQuotes, setSelectedQuotes] = useState([]);
-    const [currentQuote, setCurrentQuote] = useState(0);
+    const [currentQuoteIndex, setcurrentQuoteIndex] = useState(0);
     const [currentSelection, setCurrentSelection] = useState("");
     const [points, setPoints] = useState(0);
     const [modalVisible, setModalVisible] = useState("");
@@ -19,16 +20,16 @@ const Game = ({navigation}) => {
     const resetGame = () => {
         const selectedQuotes = allQuotes.filter(quote => allCharactersName.includes(quote.character))
                                         .sort(() => 0.5 - Math.random())
-                                        .slice(0, totalQuotes);
+                                        .slice(0, gameTotalQuotes);
         setSelectedQuotes(selectedQuotes);
         setPoints(0);
-        setCurrentQuote(0);
+        setcurrentQuoteIndex(0);
         selectedQuotes.forEach((quote, i) => {
             console.log(i, " ==> ", quote.quote.slice(0, 42), " => ", quote.character)
         })}
 
     const onValidate = () => {
-        if (currentSelection == selectedQuotes[currentQuote].character) {
+        if (currentSelection == selectedQuotes[currentQuoteIndex].character) {
             setPoints(points + 1)
             setModalVisible("correct")
         } else {
@@ -38,9 +39,9 @@ const Game = ({navigation}) => {
     const onCloseModal = () => {
         setCurrentSelection("")
         setModalVisible("")
-        if (currentQuote == totalQuotes-1) {
-            navigation.navigate("GameEnd", {points: points});
-        } else setCurrentQuote(currentQuote + 1)
+        if (currentQuoteIndex == gameTotalQuotes-1) {
+            navigation.navigate("GameEnd", {points: points, gameConfig:  route.params.gameConfig});
+        } else setcurrentQuoteIndex(currentQuoteIndex + 1)
     }
 
     useEffect(() => {
@@ -64,7 +65,7 @@ const Game = ({navigation}) => {
         <View style={styles.quoteContainer}>
           <ScrollView>
             <Text style={styles.quoteText}>
-              {selectedQuotes[currentQuote].quote}
+              {selectedQuotes[currentQuoteIndex].quote}
             </Text>
           </ScrollView>
         </View>
@@ -80,7 +81,7 @@ const Game = ({navigation}) => {
           ))}
           {modalVisible !== "" && (
             <AnswerModal
-              quoteInfo={selectedQuotes[currentQuote]}
+              quoteInfo={selectedQuotes[currentQuoteIndex]}
               answer={modalVisible}
               onClose={onCloseModal}
             ></AnswerModal>

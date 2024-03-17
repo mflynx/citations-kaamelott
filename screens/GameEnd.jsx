@@ -2,17 +2,17 @@ import { Pressable, StyleSheet, Text, View } from "react-native"
 
 
 const GameEnd = ({route, navigation}) => {
-    const {points} = route.params;
+    const {points, gameConfig} = route.params;
   return (
     <View>
         <Text style={styles.title}>C'est fini !</Text>
         <View style={styles.scoreInfo}>
-            <Text style={styles.scoreText}>Ton score est de {Number(points)}/10</Text>
-            <Text style={styles.scoreText}>{points > 5 ? "C'est pas trop mal :-)" : "Peut mieux faire ..."}</Text>
+            <Text style={styles.scoreText}>Ton score est de {Number(points)}/{gameConfig.gameTotalQuotes}</Text>
+            <Text style={styles.scoreText}>{points >= gameConfig.gameTotalQuotes/2 ? "C'est pas trop mal :-)" : "Peut mieux faire ..."}</Text>
         </View>
         <View style={styles.buttonsWrapper}>
             <Pressable>
-            <Text style={styles.button} onPress={() => navigation.navigate("Game")}>Rejouer !</Text>
+            <Text style={styles.button} onPress={() => navigation.navigate("Game", {gameConfig: gameConfig})}>Rejouer !</Text>
             </Pressable>
             <Pressable>
             <Text style={styles.button} onPress={() => navigation.navigate("Répliques au hasard")}>Réviser !</Text>
@@ -24,7 +24,7 @@ const GameEnd = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: "folkard",
+        fontFamily: "Folkard",
         fontSize: 28,
         fontWeight: "bold",
         alignSelf: "center"
